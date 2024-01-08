@@ -27,9 +27,11 @@ function Quran(props) {
                 .then(data => {
                     console.log(data)
                     const sortedWords = data.verse.words.sort((a, b) => a.position - b.position);
-                    const ayah = sortedWords.map(word => word.text_uthmani).join(" ");
+                    // Remove the last entry from the array
+                    const wordsWithoutLast = sortedWords.slice(0, -1);
+                    const ayah = wordsWithoutLast.map(word => word.text_uthmani).join(" ");
                     setAyahText(ayah);
-                    setIsLoading(false);
+                    setIsLoading(false);;
                 })
                 .catch(error => {
                     setError(error.message);
