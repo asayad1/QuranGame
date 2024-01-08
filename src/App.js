@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar'; // Import the Sidebar component
 import Button from './components/Button';
+import Quran from './components/Quran';
 import './App.css'; // Importing the App styles
 
 const SurahTable = ({ surahData }) => {
@@ -99,8 +100,11 @@ const App = () => {
                 <h1>Hard mode: {hard && "True"} {!hard && "False"}</h1>    
                 <h1>Selected Surahs: {selectedSurahs}</h1>
                 <h1>Selected Juzs: {selectedJuzs}</h1>
-                {console.log(selectedJuzs)}
                 <h1><b>Guess the surah:</b></h1>
+                <Quran 
+                    selectedSurahs={selectedSurahs}
+                    selectedJuzs={selectedJuzs}    
+                />
             </div>
         </div>
     );
