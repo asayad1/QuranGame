@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import './Quran.css'
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
@@ -44,8 +44,8 @@ function Quran(props) {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            <h1>{ayahText}</h1>
+        <div >
+            <h1 className="ayah">{ayahText}</h1>
         </div>
     );
 }

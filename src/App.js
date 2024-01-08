@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar'; // Import the Sidebar component
 import Button from './components/Button';
+import SurahButtons from './components/SurahButtons';
 import Quran from './components/Quran';
 import './App.css'; // Importing the App styles
 
@@ -9,13 +10,22 @@ const SurahTable = ({ surahData }) => {
         return <p>Loading...</p>;
     }
 
+    // Function to log a message to the console
+    const handleCellClick = (surahNumber, surahName) => {
+        console.log(`Surah clicked: ${surahName} (Number: ${surahNumber})`);
+    };
+    
     const rows = [];
     for (let i = 0; i < 19; i++) {
         const cells = [];
         for (let j = 0; j < 6; j++) {
             const surahIndex = i + j * 19;
             if (surahIndex < surahData.chapters.length) {
-                cells.push(<td key={j}>{surahData.chapters[surahIndex].name_simple}</td>);
+                cells.push(
+                <td key={j} onClick={() => handleCellClick(surahIndex + 1, surahData.chapters[surahIndex].name_simple)}>
+                    <SurahButtons surahName={surahData.chapters[surahIndex].name_simple} surahNumber={surahIndex + 1} nameTranslation={surahData.chapters[surahIndex].translated_name.name} />
+                </td>
+                );
             } else {
                 cells.push(<td key={j}></td>);
             }
@@ -105,6 +115,8 @@ const App = () => {
                     selectedSurahs={selectedSurahs}
                     selectedJuzs={selectedJuzs}    
                 />
+                <SurahTable surahData={surahData}/>
+                <SurahButtons surahName={'Al-Fatiha'} surahNumber={1} nameTranslation={'The Opening'}/>
             </div>
         </div>
     );

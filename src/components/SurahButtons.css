@@ -1,0 +1,28 @@
+.surah-button-container {
+    display: inline-flex; 
+    align-items: center; 
+
+    padding-left: 10px;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    background-color: transparent; /* Normal state background color */
+    transition: background-color 0.1s; /* Smooth transition for the background color */
+}
+
+.surah-button-container:hover {
+    background-color: #ecd7b7; /* Hover state background color */
+}
+
+.number-container {
+    margin-right: 15px;
+    font-size: x-large;
+}
+
+.name {
+    font-weight: bold;
+    font-size: medium;
+}
+
+.nameTranslation {
+    font-size: small;
+}
