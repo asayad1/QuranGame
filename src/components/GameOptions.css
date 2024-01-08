@@ -1,0 +1,16 @@
+.options .option {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.option-text {
+    color: black;
+    font-size: large;
+    margin-top: -4px; /* Nudge text up. Adjust as needed */
+    margin-right: 10px; /* Adjust spacing between text and toggle */
+}
+
+.toggle.react-toggle--checked .react-toggle-track {
+    background-color: green;
+  }

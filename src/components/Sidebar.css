@@ -1,0 +1,25 @@
+
+.sidebar {
+    width: 280px; /* Adjust the width as needed */
+    height: 100vh; /* Full height */
+    background-color: rgb(255, 247, 234); /* Background color */
+    color: white; /* Text color */
+    padding: 15px; /* Padding around the content */
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.game-options {
+    margin-top: 7vh;
+}
+
+.nav-down{
+    height: 81vh;
+    overflow-y: scroll;
+    margin-top: 1vh;
+}
+
+.page-input {
+    margin-top: 5%;
+    width: 30%;
+}
