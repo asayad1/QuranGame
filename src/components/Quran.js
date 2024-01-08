@@ -62,7 +62,7 @@ function Quran(props) {
                 const surahData = props.surahData.chapters.find(surah => surah.id === surahId);
                 if (surahData && cumulativeSum + surahData.verses_count > randomVerseNumber) {
                     selectedSurahData = surahData;
-                    selectedVerseIndex = randomVerseNumber - cumulativeSum; // Local verse index within the Surah
+                    selectedVerseIndex = randomVerseNumber - cumulativeSum + 1; // Local verse index within the Surah
                     break;
                 }
                 cumulativeSum += surahData ? surahData.verses_count : 0;
@@ -71,7 +71,7 @@ function Quran(props) {
             console.log(selectedVerseIndex)
             
     
-            if (selectedSurahData && selectedVerseIndex < selectedSurahData.verses_count) {
+            if (selectedSurahData && selectedVerseIndex <= selectedSurahData.verses_count) {
                 fetch(`https://api.quran.com/api/v4/verses/by_key/${selectedSurahData.id + ':' + selectedVerseIndex}?words=true&word_fields=text_uthmani`)
                 .then(response => {
                     console.log(response)
