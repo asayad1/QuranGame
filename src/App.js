@@ -111,12 +111,12 @@ const App = () => {
                 <h1>Selected Surahs: {selectedSurahs}</h1>
                 <h1>Selected Juzs: {selectedJuzs}</h1>
                 <h1><b>Guess the surah:</b></h1>
-                <Quran 
+                <Quran
+                    surahData={surahData}
                     selectedSurahs={selectedSurahs}
                     selectedJuzs={selectedJuzs}    
                 />
                 <SurahTable surahData={surahData}/>
-                <SurahButtons surahName={'Al-Fatiha'} surahNumber={1} nameTranslation={'The Opening'}/>
             </div>
         </div>
     );
