@@ -131,8 +131,10 @@ const App = () => {
                     score={score}  
                     skipped={skipped}
                 />
-                <button>Hint</button>
-                <button onClick={handleSkip}> Skip</button>
+                <div className="parent-div">
+                    <button className='top-button'>Hint</button>
+                    <button className='top-button' onClick={handleSkip}>Skip</button>
+                </div>
                 <h1>Score: {score - 1}</h1>
                 {incorrect && <h1>Incorrect. Try again!</h1>}
                 {skipped > 0 && <h1>The previous verse was <a target="_blank" rel="noopener noreferrer" href={`https://quran.com/en/${prevSurahID}`}>{prevSurahID}</a></h1>}

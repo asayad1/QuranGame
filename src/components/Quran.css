@@ -25,4 +25,8 @@
     max-width: 80vw;
     margin: 20px; 
     padding: 10px;
+    margin-bottom: 300px;
+}
+.loading {
+    margin-bottom: 300px;
 }

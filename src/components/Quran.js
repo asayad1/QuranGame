@@ -94,7 +94,7 @@ function Quran(props) {
         }
     }, [props.selectedJuzs, props.selectedSurahs, props.surahData, props.score, props.skipped]);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <div classNmae='loading'>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
