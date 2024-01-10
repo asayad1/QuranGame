@@ -4,16 +4,6 @@ import GameOptions from './GameOptions';
 import Button from './Button';
 import './Sidebar.css';
 
-/*
-FOR SURAHS:
-- CREATE AN ARRAY WITH # OF AYAHS IN EACH SURAH, PICK RANDOM FROM ARRAY
-
-EXAMPLE API TO USE FOR JUZ: 
-https://api.quran.com/api/v4/verses/random?words=true&juz_number=JUZ_NUMBER!!!!
-
-FOR PAGE RANGE, GET RANDOM FROM PAGES
-*/
-
 const TriSwitch = (props) => {
     const labels = {
         left: {
@@ -63,7 +53,7 @@ const Sidebar = (props) => {
                 <ul>
                     {surahData && surahData.chapters.map((surah, index) => (
                         // Check if surahData exists and then map over the chapters
-                        <li key={index}><Button text={surah.name_simple} surah_number={surah.id} selectedSurahs={props.selectedSurahs} setSelectedSurahs={props.setSelectedSurahs}/> </li>
+                        <li key={index}><Button getRandomAyah={props.getRandomAyah} text={surah.name_simple} surah_number={surah.id} selectedSurahs={props.selectedSurahs} setSelectedSurahs={props.setSelectedSurahs}/> </li>
                     ))}
                 </ul>
                 }
@@ -72,7 +62,7 @@ const Sidebar = (props) => {
                 <ul>
                     {juzData && juzData.juzs.map((juz, index) => (
                         // Check if surahData exists and then map over the chapters
-                        <li key={index}><Button text={juz.juz_number} juz_number={juz.juz_number} selectedJuzs={props.selectedJuzs} setSelectedJuzs={props.setSelectedJuzs}/> </li>
+                        <li key={index}><Button getRandomAyah={props.getRandomAyah} text={juz.juz_number} juz_number={juz.juz_number} selectedJuzs={props.selectedJuzs} setSelectedJuzs={props.setSelectedJuzs}/> </li>
                     ))}
                 </ul>
                 }

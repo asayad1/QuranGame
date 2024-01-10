@@ -10,9 +10,7 @@ function Quran(props) {
     const [ayahText, setAyahText] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-
-
-
+    
     useEffect(() => {
         // juz 
         if (props.selectedJuzs.length !== 0) {
@@ -33,7 +31,8 @@ function Quran(props) {
                     const wordsWithoutLast = sortedWords.slice(0, -1);
                     const ayah = wordsWithoutLast.map(word => word.text_uthmani).join(" ");
                     setAyahText(ayah);
-                    setIsLoading(false);;
+                    props.setAyahID(data.verse.verse_key);
+                    setIsLoading(false);
                 })
                 .catch(error => {
                     setError(error.message);
@@ -45,8 +44,7 @@ function Quran(props) {
         else if (props.selectedSurahs.length !== 0) {
             setIsLoading(true);
             setError(null);
-            console.log(props.surahData);
-    
+            
             // Calculating total verses in selected Surahs
             const totalVerses = props.selectedSurahs.reduce((sum, surahId) => {
                 const surahData = props.surahData.chapters.find(surah => surah.id === surahId);
@@ -67,7 +65,7 @@ function Quran(props) {
                 }
                 cumulativeSum += surahData ? surahData.verses_count : 0;
             }
-            console.log(selectedSurahData)
+            console.log(selectedSurahData.id)
             console.log(selectedVerseIndex)
             
     
@@ -87,7 +85,8 @@ function Quran(props) {
                     const wordsWithoutLast = sortedWords.slice(0, -1);
                     const ayah = wordsWithoutLast.map(word => word.text_uthmani).join(" ");
                     setAyahText(ayah);
-                    setIsLoading(false);;
+                    setIsLoading(false);
+                    props.setAyahID(selectedSurahData.id + ":" + selectedVerseIndex)
                 })
                 .catch(error => {
                     setError(error.message);
@@ -98,14 +97,14 @@ function Quran(props) {
             }
             setIsLoading(false);
         }
-    }, [props.selectedJuzs, props.selectedSurahs, props.surahData]);
+    }, [props.selectedJuzs, props.selectedSurahs, props.surahData, props.score]);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
         <div>
-            <h1 className="ayah">{ayahText}</h1>
+            {props.score && <h1 className="ayah">{ayahText}</h1>}
         </div>
     );
 }

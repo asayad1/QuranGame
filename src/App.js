@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar'; // Import the Sidebar component
-import Button from './components/Button';
 import SurahButtons from './components/SurahButtons';
 import Quran from './components/Quran';
 import './App.css'; // Importing the App styles
 
-const SurahTable = ({ surahData }) => {
+const SurahTable = ({ score, setScore, surahData, ayahID }) => {
     if (!surahData || !surahData.chapters) {
         return <p>Loading...</p>;
     }
 
     // Function to log a message to the console
     const handleCellClick = (surahNumber, surahName) => {
+        if (Number(ayahID.split(":")[0]) === surahNumber){
+            setScore(score + 1)
+        } else {
+            alert('Incorrect')
+        }
         console.log(`Surah clicked: ${surahName} (Number: ${surahNumber})`);
     };
     
@@ -32,7 +36,7 @@ const SurahTable = ({ surahData }) => {
         }
         rows.push(<tr key={i}>{cells}</tr>);
     }
-
+    
     return (
         <table className="surah-table">
             <tbody>{rows}</tbody>
@@ -44,6 +48,13 @@ const App = () => {
     // Fetch surah and juz data
     const [surahData, setSurahData] = useState(null);
     const [juzData, setJuzData] = useState(null);
+    const [mode, setMode] = useState('left')    
+    const [hard, setHard] = useState(false);
+    const [guessAyah, setGuessAyah] = useState(false);
+    const [selectedSurahs, setSelectedSurahs] = useState([]);
+    const [selectedJuzs, setSelectedJuzs] = useState([]);
+    const [ayahID, setAyahID] = useState();
+    const [score, setScore] = useState(1);
 
     // Function to fetch Surah data from API
     const fetchSurahData = async () => {
@@ -73,11 +84,6 @@ const App = () => {
         fetchJuzData();
     }, []);
 
-    // Game Options
-    const [mode, setMode] = useState('left')    
-    const [hard, setHard] = useState(false);
-    const [guessAyah, setGuessAyah] = useState(false);
-
     const handleAyahToggle = () => {
         setGuessAyah(!guessAyah);
     };
@@ -86,8 +92,6 @@ const App = () => {
         setHard(!hard);
     };
 
-    const [selectedSurahs, setSelectedSurahs] = useState([]);
-    const [selectedJuzs, setSelectedJuzs] = useState([]);
 
     return (
         <div className="app-container">
@@ -108,15 +112,20 @@ const App = () => {
             <div className="main-content">
                 <h1>Guess Ayah: {guessAyah && "True"} {!guessAyah && "False"}</h1>
                 <h1>Hard mode: {hard && "True"} {!hard && "False"}</h1>    
-                <h1>Selected Surahs: {selectedSurahs}</h1>
-                <h1>Selected Juzs: {selectedJuzs}</h1>
+                <h1>Selected Verse: {ayahID}</h1>    
+                
                 <h1><b>Guess the surah:</b></h1>
                 <Quran
+                    ayahID={ayahID}
+                    setAyahID={setAyahID}
                     surahData={surahData}
                     selectedSurahs={selectedSurahs}
-                    selectedJuzs={selectedJuzs}    
+                    selectedJuzs={selectedJuzs}  
+                    score={score}  
                 />
-                <SurahTable surahData={surahData}/>
+                <button>Hint</button>
+                <button>Skip</button>
+                <SurahTable score={score} setScore={setScore} surahData={surahData} ayahID={ayahID}/>
             </div>
         </div>
     );
