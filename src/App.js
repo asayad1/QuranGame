@@ -4,7 +4,7 @@ import SurahButtons from './components/SurahButtons';
 import Quran from './components/Quran';
 import './App.css'; // Importing the App styles
 
-const SurahTable = ({ score, setScore, surahData, ayahID, setIncorrect}) => {
+const SurahTable = ({ score, setScore, surahData, ayahID, setIncorrect, setSkipped}) => {
     if (!surahData || !surahData.chapters) {
         return <p>Loading...</p>;
     }
@@ -17,7 +17,7 @@ const SurahTable = ({ score, setScore, surahData, ayahID, setIncorrect}) => {
         } else {
             setIncorrect(true);
         }
-        console.log(`Surah clicked: ${surahName} (Number: ${surahNumber})`);
+        setSkipped(0);
     };
     
     const rows = [];
@@ -57,6 +57,8 @@ const App = () => {
     const [ayahID, setAyahID] = useState();
     const [score, setScore] = useState(1);
     const [incorrect, setIncorrect] = useState(false);
+    const [skipped, setSkipped] = useState(0);
+    const [prevSurahID, setPrevSurahID] = useState();
 
 
     // Function to fetch Surah data from API
@@ -95,6 +97,10 @@ const App = () => {
         setHard(!hard);
     };
 
+    const handleSkip = () => {
+        setSkipped(skipped + 1);
+        setPrevSurahID(ayahID);
+    }
 
     return (
         <div className="app-container">
@@ -113,8 +119,6 @@ const App = () => {
             />
 
             <div className="main-content">
-                <h1>Guess Ayah: {guessAyah && "True"} {!guessAyah && "False"}</h1>
-                <h1>Hard mode: {hard && "True"} {!hard && "False"}</h1>    
                 <h1>Selected Verse: {ayahID}</h1>    
                 
                 <h1><b>Guess the surah:</b></h1>
@@ -125,12 +129,14 @@ const App = () => {
                     selectedSurahs={selectedSurahs}
                     selectedJuzs={selectedJuzs}  
                     score={score}  
+                    skipped={skipped}
                 />
                 <button>Hint</button>
-                <button>Skip</button>
+                <button onClick={handleSkip}> Skip</button>
                 <h1>Score: {score - 1}</h1>
                 {incorrect && <h1>Incorrect. Try again!</h1>}
-                <SurahTable setIncorrect={setIncorrect} score={score} setScore={setScore} surahData={surahData} ayahID={ayahID}/>
+                {skipped > 0 && <h1>The previous verse was <a target="_blank" rel="noopener noreferrer" href={`https://quran.com/en/${prevSurahID}`}>{prevSurahID}</a></h1>}
+                <SurahTable setSkipped={setSkipped} setIncorrect={setIncorrect} score={score} setScore={setScore} surahData={surahData} ayahID={ayahID}/>
                 <h2>Made by Ahmad Sayad. For any bug reports / feature suggestions please email ahmadksayad@gmail.com</h2>
             </div>
         </div>

@@ -25,7 +25,6 @@ function Quran(props) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
                     const sortedWords = data.verse.words.sort((a, b) => a.position - b.position);
                     // Remove the last entry from the array
                     const wordsWithoutLast = sortedWords.slice(0, -1);
@@ -65,21 +64,17 @@ function Quran(props) {
                 }
                 cumulativeSum += surahData ? surahData.verses_count : 0;
             }
-            console.log(selectedSurahData.id)
-            console.log(selectedVerseIndex)
             
     
             if (selectedSurahData && selectedVerseIndex <= selectedSurahData.verses_count) {
                 fetch(`https://api.quran.com/api/v4/verses/by_key/${selectedSurahData.id + ':' + selectedVerseIndex}?words=true&word_fields=text_uthmani`)
                 .then(response => {
-                    console.log(response)
                     if (!response.ok) {
                         throw new Error("Network response was not ok");
                     }
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data)
                     const sortedWords = data.verse.words.sort((a, b) => a.position - b.position);
                     // Remove the last entry from the array
                     const wordsWithoutLast = sortedWords.slice(0, -1);
@@ -97,7 +92,7 @@ function Quran(props) {
             }
             setIsLoading(false);
         }
-    }, [props.selectedJuzs, props.selectedSurahs, props.surahData, props.score]);
+    }, [props.selectedJuzs, props.selectedSurahs, props.surahData, props.score, props.skipped]);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
