@@ -4,7 +4,7 @@ import SurahButtons from './components/SurahButtons';
 import Quran from './components/Quran';
 import './App.css'; // Importing the App styles
 
-const SurahTable = ({ score, setScore, surahData, ayahID }) => {
+const SurahTable = ({ score, setScore, surahData, ayahID, setIncorrect}) => {
     if (!surahData || !surahData.chapters) {
         return <p>Loading...</p>;
     }
@@ -13,8 +13,9 @@ const SurahTable = ({ score, setScore, surahData, ayahID }) => {
     const handleCellClick = (surahNumber, surahName) => {
         if (Number(ayahID.split(":")[0]) === surahNumber){
             setScore(score + 1)
+            setIncorrect(false);
         } else {
-            alert('Incorrect')
+            setIncorrect(true);
         }
         console.log(`Surah clicked: ${surahName} (Number: ${surahNumber})`);
     };
@@ -55,6 +56,8 @@ const App = () => {
     const [selectedJuzs, setSelectedJuzs] = useState([]);
     const [ayahID, setAyahID] = useState();
     const [score, setScore] = useState(1);
+    const [incorrect, setIncorrect] = useState(false);
+
 
     // Function to fetch Surah data from API
     const fetchSurahData = async () => {
@@ -125,7 +128,10 @@ const App = () => {
                 />
                 <button>Hint</button>
                 <button>Skip</button>
-                <SurahTable score={score} setScore={setScore} surahData={surahData} ayahID={ayahID}/>
+                <h1>Score: {score - 1}</h1>
+                {incorrect && <h1>Incorrect. Try again!</h1>}
+                <SurahTable setIncorrect={setIncorrect} score={score} setScore={setScore} surahData={surahData} ayahID={ayahID}/>
+                <h2>Made by Ahmad Sayad. For any bug reports / feature suggestions please email ahmadksayad@gmail.com</h2>
             </div>
         </div>
     );
